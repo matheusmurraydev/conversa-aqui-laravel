@@ -14,7 +14,16 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|email|unique:users',
+            'cellphone' => [
+                'required',
+                'regex:/^\(\d{2}\) \d{9}$/',
+            ],//(11)99427-3409
+            'data_nascimento' => 'required|date|before_or_equal:today',//1990-05-15, YYYY-MM-DD
+            'you_are_gender' => 'required|in:Homem,Mulher,Outros',
+            'height' => 'required|numeric|min:1',
+            'you_look_for_gender' => 'required|in:Homem,Mulher,Outros',
             'password' => 'required|string|min:8',
         ]);
     
@@ -24,7 +33,13 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
+            'cellphone' => $request->cellphone,
+            'data_nascimento' => $request->data_nascimento,
+            'you_are_gender' => $request->you_are_gender,
+            'height' => $request->height,
+            'you_look_for_gender' => $request->you_look_for_gender,
             'password' => bcrypt($request->password),
         ]);
 

@@ -9,22 +9,50 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_register()
+    public function testUserRegistration()
     {
-        $userData = [
-            'name' => 'Matheus',
-            'email' => 'matheus@example.com',
-            'password' => 'password123',
+        $data = [
+            'name' => 'John Doe',
+            'username' => 'johndoe',
+            'email' => 'johndoe@example.com',
+            'cellphone' => '(11) 994273409',
+            'data_nascimento' => '1990-05-15',
+            'you_are_gender' => 'Homem',
+            'height' => 175.5,
+            'you_look_for_gender' => 'Mulher',
+            'password' => 'secret_password',
         ];
 
-        $response = $this->postJson('/api/register', $userData);
+        // Send a POST request to your registration endpoint with the $data array.
+        $response = $this->post('/api/register', $data);
 
-        $response->assertStatus(201)
-            ->assertJsonStructure([
-                'user' => ['name', 'email', 'created_at', 'updated_at'],
-                'token',
-            ]);
+        // Assert that the registration was successful.
+        $response->assertStatus(201);
+
+        // Assert that the response contains the user and a token.
+        $response->assertJsonStructure([
+            'user' => [
+                'id',
+                'name',
+                'username',
+                'email',
+                'cellphone',
+                'data_nascimento',
+                'you_are_gender',
+                'height',
+                'you_look_for_gender',
+            ],
+            'token',
+        ]);
+
+        // You can also assert that the user was stored in the database.
+        $this->assertDatabaseHas('users', [
+            'name' => 'John Doe',
+            'username' => 'johndoe',
+            'email' => 'johndoe@example.com',
+        ]);
     }
+
 
     public function test_registration_requires_valid_data()
     {
