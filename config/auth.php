@@ -43,10 +43,6 @@ return [
         'api' => [
             'driver' => 'sanctum', // Make sure this is set to 'sanctum'
             'provider' => 'users',
-        ],
-        'usersCupom' => [
-            'driver' => 'sanctum', // Make sure this is set to 'sanctum'
-            'provider' => 'usersCupom',
         ]
     ],
 
@@ -71,11 +67,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-        'usersCupom' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\UserCupom::class,
-        ],
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
@@ -108,13 +100,7 @@ return [
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
-        ],
-        'usersCupom' => [
-            'provider' => 'usersCupom',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
+        ]
     ],
 
     /*

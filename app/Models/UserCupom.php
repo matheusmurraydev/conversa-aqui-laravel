@@ -10,8 +10,6 @@ class UserCupom extends Authenticatable
     use HasApiTokens;
 
     protected $table = 'users_cupom';
-    
-    protected $guard = 'usersCupom';
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +21,7 @@ class UserCupom extends Authenticatable
         'cellphone',
         'data_nascimento',
         'you_are_gender',
+        'profile_photo_path',
         'password'
     ];
 

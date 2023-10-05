@@ -25,6 +25,7 @@ class UserRelAmizade extends Authenticatable
         'you_are_gender',
         'you_look_for_gender',
         'you_look_for_gender_friend',
+        'profile_photo_path',
         'password'
     ];
 

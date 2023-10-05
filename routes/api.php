@@ -29,11 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/profile/photo', [ProfilePhotoController::class, 'uploadPhoto']);
 });
 
-Route::middleware('auth:usersCupom')->group(function () {
-    Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
-    Route::post('/profile/photo', [ProfilePhotoController::class, 'uploadPhoto']);
-});
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

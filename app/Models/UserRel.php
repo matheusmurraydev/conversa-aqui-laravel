@@ -24,6 +24,7 @@ class UserRel extends Authenticatable
         'data_nascimento',
         'you_are_gender',
         'you_look_for_gender',
+        'profile_photo_path',
         'password'
     ];
 

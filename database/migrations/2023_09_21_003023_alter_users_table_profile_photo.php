@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('profile_photo_path')->nullable();
         });
+        Schema::table('users_cupom', function (Blueprint $table) {
+            $table->string('profile_photo_path')->nullable();
+        });
+        Schema::table('users_rel', function (Blueprint $table) {
+            $table->string('profile_photo_path')->nullable();
+        });
+        Schema::table('users_rel_amizade', function (Blueprint $table) {
+            $table->string('profile_photo_path')->nullable();
+        });
     }
 
     /**
