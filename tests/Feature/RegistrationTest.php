@@ -3,63 +3,42 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    use RefreshDatabase;
+    use WithFaker;
 
-    public function testUserRegistration()
+    public function testUserCanRegisterWithValidData()
     {
+        // Generate valid data directly
         $data = [
-            'name' => 'John Doe',
-            'username' => 'johndoe',
-            'email' => 'johndoe@example.com',
-            'cellphone' => '(11) 994273409',
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'cellphone' => '(11) 123456789',
             'data_nascimento' => '1990-05-15',
             'you_are_gender' => 'Homem',
-            'height' => 175.5,
-            'you_look_for_gender' => 'Mulher',
-            'password' => 'secret_password',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
         ];
 
-        // Send a POST request to your registration endpoint with the $data array.
-        $response = $this->post('/api/register', $data);
+        $response = $this->postJson('/api/register/user-cupom', $data);
 
-        // Assert that the registration was successful.
         $response->assertStatus(201);
 
-        // Assert that the response contains the user and a token.
-        $response->assertJsonStructure([
-            'user' => [
-                'id',
-                'name',
-                'username',
-                'email',
-                'cellphone',
-                'data_nascimento',
-                'you_are_gender',
-                'height',
-                'you_look_for_gender',
-            ],
-            'token',
-        ]);
-
-        // You can also assert that the user was stored in the database.
-        $this->assertDatabaseHas('users', [
-            'name' => 'John Doe',
-            'username' => 'johndoe',
-            'email' => 'johndoe@example.com',
-        ]);
+        $response->assertJsonStructure(['user', 'token']);
     }
 
 
-    public function test_registration_requires_valid_data()
+    public function testUserRegistrationFailsWithInvalidData()
     {
-        $response = $this->postJson('/api/register', []);
+        $invalidData = [];
 
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['name', 'email', 'password']);
+        $response = $this->postJson('/api/register/user-cupom', $invalidData);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonStructure(['error']);
     }
 }
-

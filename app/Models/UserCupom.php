@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class UserCupom extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
 
+    protected $table = 'users_cupom';
+    
+    protected $guard = 'usersCupom';
     /**
      * The attributes that are mass assignable.
      *
@@ -19,15 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
         'email',
-        'cellphone',//(11)99427-3409
-        'data_nascimento',//1990-05-15, YYYY-MM-DD
+        'cellphone',
+        'data_nascimento',
         'you_are_gender',
-        'height',
-        'you_look_for_gender',
-        'password',
-        'profile_photo_path'
+        'password'
     ];
 
     /**
@@ -37,7 +33,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'remember_token'
     ];
 
     /**

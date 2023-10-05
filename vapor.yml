@@ -1,5 +1,5 @@
-id: 52205
-name: conversa-aqui
+id: 52832
+name: conversa-aqui-aws-rafaelq
 environments:
     production:
         memory: 1024

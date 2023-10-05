@@ -6,68 +6,93 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\UserCupom;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    // public function register(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //             'name' => 'required|string|max:255',
+    //             'username' => 'required|string|max:255|unique:users',
+    //             'email' => 'required|email|unique:users',
+    //             'cellphone' => [
+    //                 'required',
+    //                 'regex:/^\(\d{2}\) \d{9}$/',
+    //             ], //(11)99427-3409
+    //             'data_nascimento' => 'required|date|before_or_equal:today', //1990-05-15, YYYY-MM-DD
+    //             'you_are_gender' => 'required|in:Homem,Mulher,Outros',
+    //             'height' => 'required|numeric|min:1',
+    //             'you_look_for_gender' => 'required|in:Homem,Mulher,Outros',
+    //             'password' => 'required|string|min:8',
+    //         ]);
+
+    //     $user = User::create([
+    //         'name' => $validatedData["name"],
+    //         'username' => $validatedData["username"],
+    //         'email' => $validatedData["email"],
+    //         'cellphone' => $validatedData["cellphone"],
+    //         'data_nascimento' => $validatedData["data_nascimento"],
+    //         'you_are_gender' => $validatedData["you_are_gender"],
+    //         'height' => $validatedData["height"],
+    //         'you_look_for_gender' => $validatedData["you_look_for_gender"],
+    //         'password' => bcrypt($validatedData["password"]),
+    //     ]);
+
+    //     $token = $user->createToken('authToken')->plainTextToken;
+
+    //     return response(['user' => $user, 'token' => $token], 201);
+    // }
+
+    public function registerUserCupom(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email|unique:users',
-            'cellphone' => [
-                'required',
-                'regex:/^\(\d{2}\) \d{9}$/',
-            ],//(11)99427-3409
-            'data_nascimento' => 'required|date|before_or_equal:today',//1990-05-15, YYYY-MM-DD
-            'you_are_gender' => 'required|in:Homem,Mulher,Outros',
-            'height' => 'required|numeric|min:1',
-            'you_look_for_gender' => 'required|in:Homem,Mulher,Outros',
-            'password' => 'required|string|min:8',
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users_cupom,email',
+                'cellphone' => [
+                    'required',
+                    'regex:/^\(\d{2}\) \d{9}$/',
+                ],
+                'data_nascimento' => 'required|date|before_or_equal:today',
+                'you_are_gender' => 'required|in:Homem,Mulher,Outros',
+                'password' => 'required|string|min:8',
+                'password_confirmation' => 'required|string|min:8|same:password',
+            ]);
+        
+            $userCupom = UserCupom::create([
+                'name' => $validatedData["name"],
+                'email' => $validatedData["email"],
+                'cellphone' => $validatedData["cellphone"],
+                'data_nascimento' => $validatedData["data_nascimento"],
+                'you_are_gender' => $validatedData["you_are_gender"],
+                'password' => bcrypt($validatedData["password"]),
+            ]);
+        
+            $token = $userCupom->createToken('authToken')->plainTextToken;
+        
+            return response(['user' => $userCupom, 'token' => $token], 201);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 422);
         }
-
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'cellphone' => $request->cellphone,
-            'data_nascimento' => $request->data_nascimento,
-            'you_are_gender' => $request->you_are_gender,
-            'height' => $request->height,
-            'you_look_for_gender' => $request->you_look_for_gender,
-            'password' => bcrypt($request->password),
-        ]);
-
-        $token = $user->createToken('authToken')->plainTextToken;
-
-        return response(['user' => $user, 'token' => $token], 201);
     }
-
-    public function login(Request $request)
+    public function loginUserCupom(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-    
-        if ($validator->fails()) {
-            // Validation failed; you can return error messages
-            return response()->json(['errors' => $validator->errors()], 422);
+
+        $user = UserCupom::where('email', $validatedData['email'])->first();
+
+        if (!$user || !password_verify($validatedData['password'], $user->password)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::user();
-            $token = $user->createToken('authToken')->plainTextToken;
+        $token = $user->createToken('authToken')->plainTextToken;
 
-            return response(['user' => $user, 'token' => $token], 200);
-        }
-
-        return response()->json(['error' => 'Unauthorized'], 401);
+        return response(['user' => $user, 'token' => $token], 200);
     }
 }
 
