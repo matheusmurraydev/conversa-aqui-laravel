@@ -4,7 +4,7 @@ Backend em laravel
 
 php artisan test
 
-php vendor/bin/vapor deploy production
+php vendor/bin/vapor deploy prod-docker
 
 for debug mode:
 
