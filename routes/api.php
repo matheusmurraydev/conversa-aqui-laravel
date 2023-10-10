@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ProfilePhotoController;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,13 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register/user-cupom', [AuthController::class, 'registerUserCupom']);
-Route::post('/register/user-rel', [AuthController::class, 'registerUserRel']);
-Route::post('/register/user-rel-amizade', [AuthController::class, 'registerUserRelAmizade']);
+Route::post('/register/user-cupom', [RegisterController::class, 'registerUserCupom']);
+Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']);
+Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
 
-Route::post('/login/user-cupom', [AuthController::class, 'loginUserCupom']);
-Route::post('/login/user-rel', [AuthController::class, 'loginUserRel']);
-Route::post('/login/user-rel-amizade', [AuthController::class, 'loginUserRelAmizade']);
+Route::post('/login/user-cupom', [LoginController::class, 'loginUserCupom']);
+Route::post('/login/user-rel', [LoginController::class, 'loginUserRel']);
+Route::post('/login/user-rel-amizade', [LoginController::class, 'loginUserRelAmizade']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
