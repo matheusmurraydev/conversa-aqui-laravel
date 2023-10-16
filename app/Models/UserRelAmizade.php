@@ -10,23 +10,19 @@ class UserRelAmizade extends Authenticatable
     use HasApiTokens;
 
     protected $table = 'users_rel_amizade';
-    
-    protected $guard = 'usersRelAmizade';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
         'cellphone',
         'data_nascimento',
+        'profile_photo_path',
         'you_are_gender',
         'you_look_for_gender',
         'you_look_for_gender_friend',
-        'profile_photo_path',
-        'password'
+        'user_id',
     ];
 
     /**
@@ -35,7 +31,6 @@ class UserRelAmizade extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token'
     ];
 
@@ -46,6 +41,10 @@ class UserRelAmizade extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

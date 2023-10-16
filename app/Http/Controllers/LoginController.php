@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCupom;
 use App\Models\UserRel;
@@ -10,14 +11,14 @@ use App\Models\UserRelAmizade;
 
 class LoginController extends Controller
 {
-    public function loginUserCupom(Request $request)
+    public function login(Request $request)
     {
         $validatedData = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        $user = UserCupom::where('email', $validatedData['email'])->first();
+        $user = User::where('email', $validatedData['email'])->first();
 
         if (!$user || !password_verify($validatedData['password'], $user->password)) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -28,40 +29,40 @@ class LoginController extends Controller
         return response(['user' => $user, 'token' => $token], 200);
     }
 
-    public function loginUserRel(Request $request)
-    {
-        $validatedData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+    // public function loginUserRel(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required|string',
+    //     ]);
 
-        $user = UserRel::where('email', $validatedData['email'])->first();
+    //     $user = User::where('email', $validatedData['email'])->first();
 
-        if (!$user || !password_verify($validatedData['password'], $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+    //     if (!$user || !password_verify($validatedData['password'], $user->password)) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
 
-        $token = $user->createToken('authToken')->plainTextToken;
+    //     $token = $user->createToken('authToken')->plainTextToken;
 
-        return response(['user' => $user, 'token' => $token], 200);
-    }
+    //     return response(['user' => $user, 'token' => $token], 200);
+    // }
 
-    public function loginUserRelAmizade(Request $request)
-    {
-        $validatedData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+    // public function loginUserRelAmizade(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required|string',
+    //     ]);
 
-        $user = UserRelAmizade::where('email', $validatedData['email'])->first();
+    //     $user = User::where('email', $validatedData['email'])->first();
 
-        if (!$user || !password_verify($validatedData['password'], $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+    //     if (!$user || !password_verify($validatedData['password'], $user->password)) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
 
-        $token = $user->createToken('authToken')->plainTextToken;
+    //     $token = $user->createToken('authToken')->plainTextToken;
 
-        return response(['user' => $user, 'token' => $token], 200);
-    }
+    //     return response(['user' => $user, 'token' => $token], 200);
+    // }
 }
 

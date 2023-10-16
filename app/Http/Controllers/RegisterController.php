@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCupom;
 use App\Models\UserRel;
@@ -15,7 +16,7 @@ class RegisterController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users_cupom,email',
+                'email' => 'required|email|unique:users,email',
                 'cellphone' => [
                     'required',
                     'regex:/^\(\d{2}\) \d{9}$/',
@@ -25,21 +26,28 @@ class RegisterController extends Controller
                 'password' => 'required|string|min:8',
                 'password_confirmation' => 'required|string|min:8|same:password',
             ]);
-        
-            $userCupom = UserCupom::create([
+            
+            $user = User::create([
                 'name' => $validatedData["name"],
                 'email' => $validatedData["email"],
+                'password' => bcrypt($validatedData["password"]),
+            ]);
+
+            $userCupom = UserCupom::create([
                 'cellphone' => $validatedData["cellphone"],
                 'data_nascimento' => $validatedData["data_nascimento"],
                 'you_are_gender' => $validatedData["you_are_gender"],
-                'password' => bcrypt($validatedData["password"]),
+                'user_id' => $user->id,
             ]);
         
             $token = $userCupom->createToken('authToken')->plainTextToken;
         
             return response(['user' => $userCupom, 'token' => $token], 201);
+
         } catch (\Throwable $th) {
-            return response()->json(['error' => $th->getMessage()], 422);
+
+            return response()->json(['error' => $th->getMessage()], 500);
+
         }
     }
 
@@ -48,7 +56,7 @@ class RegisterController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users_rel,email',
+                'email' => 'required|email|unique:users,email',
                 'cellphone' => [
                     'required',
                     'regex:/^\(\d{2}\) \d{9}$/',
@@ -60,21 +68,25 @@ class RegisterController extends Controller
                 'password_confirmation' => 'required|string|min:8|same:password',
             ]);
         
-            $userRel = UserRel::create([
+            $user = User::create([
                 'name' => $validatedData["name"],
                 'email' => $validatedData["email"],
+                'password' => bcrypt($validatedData["password"]),
+            ]);
+        
+            $userRel = UserRel::create([
                 'cellphone' => $validatedData["cellphone"],
                 'data_nascimento' => $validatedData["data_nascimento"],
                 'you_are_gender' => $validatedData["you_are_gender"],
                 'you_look_for_gender' => $validatedData["you_look_for_gender"],
-                'password' => bcrypt($validatedData["password"]),
+                'user_id' => $user->id
             ]);
         
             $token = $userRel->createToken('authToken')->plainTextToken;
         
             return response(['user' => $userRel, 'token' => $token], 201);
         } catch (\Throwable $th) {
-            return response()->json(['error' => $th->getMessage()], 422);
+            return response()->json(['error' => $th->getMessage()], 500);
         }
     }
 
@@ -83,7 +95,7 @@ class RegisterController extends Controller
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users_rel_amizade,email',
+                'email' => 'required|email|unique:users,email',
                 'cellphone' => [
                     'required',
                     'regex:/^\(\d{2}\) \d{9}$/',
@@ -96,22 +108,26 @@ class RegisterController extends Controller
                 'password_confirmation' => 'required|string|min:8|same:password',
             ]);
         
-            $userRelAmizade = UserRelAmizade::create([
+            $user = User::create([
                 'name' => $validatedData["name"],
                 'email' => $validatedData["email"],
+                'password' => bcrypt($validatedData["password"]),
+            ]);
+        
+            $userRelAmizade = UserRelAmizade::create([
                 'cellphone' => $validatedData["cellphone"],
                 'data_nascimento' => $validatedData["data_nascimento"],
                 'you_are_gender' => $validatedData["you_are_gender"],
                 'you_look_for_gender' => $validatedData["you_look_for_gender"],
                 'you_look_for_gender_friend' => $validatedData["you_look_for_gender_friend"],
-                'password' => bcrypt($validatedData["password"]),
+                'user_id' => $user->id
             ]);
         
             $token = $userRelAmizade->createToken('authToken')->plainTextToken;
         
             return response(['user' => $userRelAmizade, 'token' => $token], 201);
         } catch (\Throwable $th) {
-            return response()->json(['error' => $th->getMessage()], 422);
+            return response()->json(['error' => $th->getMessage()], 500);
         }
     }
 }

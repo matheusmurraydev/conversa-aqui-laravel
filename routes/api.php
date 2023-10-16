@@ -23,9 +23,7 @@ Route::post('/register/user-cupom', [RegisterController::class, 'registerUserCup
 Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']);
 Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
 
-Route::post('/login/user-cupom', [LoginController::class, 'loginUserCupom']);
-Route::post('/login/user-rel', [LoginController::class, 'loginUserRel']);
-Route::post('/login/user-rel-amizade', [LoginController::class, 'loginUserRelAmizade']);
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/send-recover-code', [PassRecoveryController::class, 'sendRecoverCode']);
 // Route::post('/confirm-recovery-code', [PassRecoveryController::class, 'confirmCode']);

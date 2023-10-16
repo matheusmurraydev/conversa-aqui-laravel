@@ -17,13 +17,11 @@ class UserCupom extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
         'cellphone',
         'data_nascimento',
-        'you_are_gender',
         'profile_photo_path',
-        'password'
+        'you_are_gender',
+        'user_id',
     ];
 
     /**
@@ -32,7 +30,6 @@ class UserCupom extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token'
     ];
 
@@ -43,6 +40,10 @@ class UserCupom extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

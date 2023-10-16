@@ -19,15 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
         'email',
-        'cellphone',//(11)99427-3409
-        'data_nascimento',//1990-05-15, YYYY-MM-DD
-        'you_are_gender',
-        'height',
-        'you_look_for_gender',
         'password',
-        'profile_photo_path'
+        'user_type',
     ];
 
     /**
@@ -36,8 +30,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
 
     /**
@@ -46,7 +39,21 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function userCupom()
+    {
+        return $this->hasOne(UserCupom::class);
+    }
+
+    public function userRel()
+    {
+        return $this->hasOne(UserRel::class);
+    }
+
+    public function userRelAmizade()
+    {
+        return $this->hasOne(UserRelAmizade::class);
+    }
 }

@@ -36,7 +36,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->postJson('/api/register/user-cupom', $invalidData);
 
-        $response->assertStatus(422);
+        $response->assertStatus(500);
 
         $response->assertJsonStructure(['error']);
     }
@@ -69,7 +69,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->postJson('/api/register/user-rel', $invalidData);
 
-        $response->assertStatus(422);
+        $response->assertStatus(500);
 
         $response->assertJsonStructure(['error']);
     }
@@ -103,7 +103,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->postJson('/api/register/user-rel-amizade', $invalidData);
 
-        $response->assertStatus(422);
+        $response->assertStatus(500);
 
         $response->assertJsonStructure(['error']);
     }
