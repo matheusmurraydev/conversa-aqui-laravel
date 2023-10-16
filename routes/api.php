@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ProfilePhotoController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PassRecoveryController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,15 @@ Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerU
 Route::post('/login/user-cupom', [LoginController::class, 'loginUserCupom']);
 Route::post('/login/user-rel', [LoginController::class, 'loginUserRel']);
 Route::post('/login/user-rel-amizade', [LoginController::class, 'loginUserRelAmizade']);
+
+Route::post('/send-recover-code', [PassRecoveryController::class, 'sendRecoverCode']);
+// Route::post('/confirm-recovery-code', [PassRecoveryController::class, 'confirmCode']);
+// Route::post('/new-password', [PassRecoveryController::class, 'newPassword']);
+// Route::post('/new-code', [PassRecoveryController::class, 'sendNewCode']);
+
+Route::post('/forgot-password', [PassRecoveryController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [PassRecoveryController::class, 'reset']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
