@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\PerguntasBasicas;
 use App\Models\PerguntasEnunciados;
 use App\Models\PerguntasOpcoes;
 use App\Models\PerguntasRespostas;
@@ -16,6 +17,15 @@ class PerguntasController extends Controller
     public function indexWithOpcoes()
     {
         $perguntas = PerguntasEnunciados::with('opcoes')->get();
+
+        return response()->json($perguntas);
+    }
+
+    public function indexWithOpcoesBasicas()
+    {
+        $userType = Auth::user()->user_type;
+        
+        $perguntas = PerguntasBasicas::where("user_type", $userType)->with('enunciados.opcoes')->get();
 
         return response()->json($perguntas);
     }

@@ -31,6 +31,7 @@ class RegisterController extends Controller
                 'name' => $validatedData["name"],
                 'email' => $validatedData["email"],
                 'password' => bcrypt($validatedData["password"]),
+                'user_type' => 'user_cupom'
             ]);
 
             $userCupom = UserCupom::create([
@@ -42,7 +43,7 @@ class RegisterController extends Controller
         
             $token = $userCupom->createToken('authToken')->plainTextToken;
         
-            return response(['user' => $userCupom, 'token' => $token], 201);
+            return response(['user' => compact('user', 'userCupom'), 'token' => $token], 201);
 
         } catch (\Throwable $th) {
 
@@ -72,6 +73,7 @@ class RegisterController extends Controller
                 'name' => $validatedData["name"],
                 'email' => $validatedData["email"],
                 'password' => bcrypt($validatedData["password"]),
+                'user_type' => 'user_rel'
             ]);
         
             $userRel = UserRel::create([
@@ -84,7 +86,7 @@ class RegisterController extends Controller
         
             $token = $userRel->createToken('authToken')->plainTextToken;
         
-            return response(['user' => $userRel, 'token' => $token], 201);
+            return response(['user' => compact('user', 'userRel'), 'token' => $token], 201);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
         }
@@ -112,6 +114,7 @@ class RegisterController extends Controller
                 'name' => $validatedData["name"],
                 'email' => $validatedData["email"],
                 'password' => bcrypt($validatedData["password"]),
+                'user_type' => 'user_rel_amizade'
             ]);
         
             $userRelAmizade = UserRelAmizade::create([
@@ -125,7 +128,7 @@ class RegisterController extends Controller
         
             $token = $userRelAmizade->createToken('authToken')->plainTextToken;
         
-            return response(['user' => $userRelAmizade, 'token' => $token], 201);
+            return response(['user' => compact('user', 'userRelAmizade'), 'token' => $token], 201);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
         }

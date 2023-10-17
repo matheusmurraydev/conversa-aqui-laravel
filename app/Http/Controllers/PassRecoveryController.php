@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PasswordRecover;
+use App\Models\User;
 use App\Models\UserCupom;
 use App\Models\UserRel;
 use App\Models\UserRelAmizade;
@@ -18,18 +19,26 @@ class PassRecoveryController extends Controller
             'user_type' => 'required|in:user_cupom,user_rel,user_rel_amizade',
         ]);
 
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'error' => 'Não foi possível encontrar um usuário com este email'
+            ], 422);
+        }
+
         try {
 
             if (PasswordRecover::where([
                 'email' => $request->email,
                 'user_type' => $request->user_type
             ])->first()) {
-                $this->deleteRecoverToken($request);
+                $this->deleteRecoverToken($request->email);
             }
 
             $code = $this->generateRecoverCode();
             $this->storeGeneratedCode($request->email, $code, $request->user_type);
-            $this->sendCode($request, $code, $request->user_type);
+            $this->sendCode($user, $code);
 
             return response([
                 "recoveryCode" => $code 
@@ -70,34 +79,16 @@ class PassRecoveryController extends Controller
         ]);
     }
 
-    private function deleteRecoverToken($request)
+    private function deleteRecoverToken($email)
     {
-        $recover = PasswordRecover::find($request->email);
+        $recover = PasswordRecover::find($email);
         if ($recover) {
             $recover->delete();
         }
     }
 
-    private function sendCode($request, $code, $userType)
+    private function sendCode(User $user, $code)
     {
-        $email = $request->email;
-
-        switch ($userType) {
-            case 'user_cupom':
-                $model = UserCupom::where('email', $email)->first();
-                break;
-            case 'user_rel':
-                $model = UserRel::where('email', $email)->first();
-                break;
-            case 'user_rel_amizade':
-                $model = UserRelAmizade::where('email', $email)->first();
-                break;
-            default:
-                break;
-        }
-
-        if ($model) {
-            $notification = $model->notify(new PasswordRecoveryNotification($code));
-        }
+        $user->notify(new PasswordRecoveryNotification($code));
     }
 }

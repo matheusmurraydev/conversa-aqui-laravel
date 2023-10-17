@@ -35,9 +35,12 @@ Route::post('/reset-password', [PassRecoveryController::class, 'reset']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
+
     Route::get('/perguntas', [PerguntasController::class, 'indexWithOpcoes']);
+    Route::get('/perguntas/basicas', [PerguntasController::class, 'indexWithOpcoesBasicas']);
     Route::post('/pergunta', [PerguntasController::class, 'createPergunta']);
     Route::post('/pergunta/resposta', [PerguntasController::class, 'createResposta']);
+
     Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
     Route::post('/profile/photo', [ProfilePhotoController::class, 'uploadPhoto']);
 });
