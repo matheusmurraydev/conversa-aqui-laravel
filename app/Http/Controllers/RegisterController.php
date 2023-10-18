@@ -41,7 +41,7 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
             ]);
         
-            $token = $userCupom->createToken('authToken')->plainTextToken;
+            $token = $user->createToken('authToken')->plainTextToken;
         
             return response(['user' => compact('user', 'userCupom'), 'token' => $token], 201);
 
@@ -84,7 +84,7 @@ class RegisterController extends Controller
                 'user_id' => $user->id
             ]);
         
-            $token = $userRel->createToken('authToken')->plainTextToken;
+            $token = $user->createToken('authToken')->plainTextToken;
         
             return response(['user' => compact('user', 'userRel'), 'token' => $token], 201);
         } catch (\Throwable $th) {
@@ -126,7 +126,7 @@ class RegisterController extends Controller
                 'user_id' => $user->id
             ]);
         
-            $token = $userRelAmizade->createToken('authToken')->plainTextToken;
+            $token = $user->createToken('authToken')->plainTextToken;
         
             return response(['user' => compact('user', 'userRelAmizade'), 'token' => $token], 201);
         } catch (\Throwable $th) {
