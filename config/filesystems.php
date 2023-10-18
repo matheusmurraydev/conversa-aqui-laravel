@@ -48,8 +48,8 @@ return [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => "sa-east-1",
-            'bucket' => "conversaqui",
+            'region' => "us-east-1",
+            'bucket' => "conversaqui-2",
         ],
 
     ],

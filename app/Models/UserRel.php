@@ -19,7 +19,6 @@ class UserRel extends Authenticatable
     protected $fillable = [
         'cellphone',
         'data_nascimento',
-        'profile_photo_path',
         'you_are_gender',
         'you_look_for_gender',
         'user_id',

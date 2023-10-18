@@ -19,7 +19,6 @@ class UserCupom extends Authenticatable
     protected $fillable = [
         'cellphone',
         'data_nascimento',
-        'profile_photo_path',
         'you_are_gender',
         'user_id',
     ];
