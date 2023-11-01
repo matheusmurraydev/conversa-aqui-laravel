@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewChatMessage;
 use App\Http\Controllers\Controller;
-use App\MatchesLikes;
-use App\MatchesPeopleToMatch;
-use App\Models\Messages;
+use App\Models\MatchesLikes;
+use App\Models\MatchesPeopleToMatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,10 +40,10 @@ class MatchesController extends Controller
                 'option' => $request->input('option')
             ]);
     
-            return response()->json(['message' => 'Message sent'], 201);
+            return response()->json(['success' => "Opção de '{$request->input('option')}' armazenado com sucesso."], 201);
 
         } catch (\Throwable $th) {
-            
+
             return response()->json(['error' => $th->getMessage()], 500);
 
         }
