@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ProfilePhotoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PassRecoveryController;
 use App\Http\Controllers\PerguntasController;
+use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChatController;
 use Illuminate\Http\Request;
@@ -44,6 +45,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
     Route::post('/profile/photo', [ProfilePhotoController::class, 'uploadPhoto']);
+
+    Route::get('/matches/pessoas', [MatchesController::class, 'getPeople']);
+    Route::post('/matches/like', [MatchesController::class, 'likePeople']);
 
     Route::post('/chat/message', [ChatController::class, 'newChatMessage']);
 });
