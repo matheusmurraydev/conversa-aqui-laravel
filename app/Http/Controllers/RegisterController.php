@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Matches;
 use App\Http\Controllers\Controller;
+use App\Models\MatchesPeopleToMatch;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCupom;
 use App\Models\UserRel;
 use App\Models\UserRelAmizade;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -40,7 +43,9 @@ class RegisterController extends Controller
                 'you_are_gender' => $validatedData["you_are_gender"],
                 'user_id' => $user->id,
             ]);
-        
+
+            Matches::feedInitialMatches($user->id, 'user_cupom');
+
             $token = $user->createToken('authToken')->plainTextToken;
         
             return response(['user' => compact('user', 'userCupom'), 'token' => $token], 201);
@@ -83,6 +88,8 @@ class RegisterController extends Controller
                 'you_look_for_gender' => $validatedData["you_look_for_gender"],
                 'user_id' => $user->id
             ]);
+
+            Matches::feedInitialMatches($user->id, 'user_rel');
         
             $token = $user->createToken('authToken')->plainTextToken;
         
@@ -125,6 +132,8 @@ class RegisterController extends Controller
                 'you_look_for_gender_friend' => $validatedData["you_look_for_gender_friend"],
                 'user_id' => $user->id
             ]);
+
+            Matches::feedInitialMatches($user->id, 'user_rel_amizade');
         
             $token = $user->createToken('authToken')->plainTextToken;
         
