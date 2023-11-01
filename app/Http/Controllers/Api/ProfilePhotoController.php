@@ -20,17 +20,22 @@ class ProfilePhotoController extends Controller
 
         // Delete the previous profile photo from S3
         if ($user->profile_photo_path) {
+            
             Storage::disk('s3')->delete($user->profile_photo_path);
         }
 
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('profile-photos', 's3'); // Upload to S3
-            $user->update(['profile_photo_path' => $photoPath]);
+
+            $photoPath = $request->file('photo')->store('profile-photos', 's3');
+
+            $photoUrl = Storage::disk('s3')->url($photoPath);
+
+            $user->update(['profile_photo_path' => $photoUrl]);
         }
 
         return response()->json([
             'message' => 'Profile photo updated successfully',
-            'photo_url' => Storage::disk('s3')->url($user->profile_photo_path),
+            'photo_url' => $photoUrl,
         ]);
     }
 
