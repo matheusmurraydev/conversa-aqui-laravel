@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/profile/photo', [ProfilePhotoController::class, 'uploadPhoto']);
 
     Route::get('/matches/pessoas', [MatchesController::class, 'getPeople']);
+    Route::get('/matches', [MatchesController::class, 'getMatches']);
     Route::post('/matches/like', [MatchesController::class, 'likePeople']);
 
     Route::post('/chat/message', [ChatController::class, 'newChatMessage']);
