@@ -15,7 +15,7 @@ class PerguntasSeeder extends Seeder
             
             [
                 'enunciado' => 'Qual é seu estado civil?',
-                'tipo' => 'multipla_escolha',
+                'tipo' => 'unica_escolha',
                 'opcoes' => [
                     'Solteiro(a)',
                     'Namorando',
@@ -101,7 +101,7 @@ class PerguntasSeeder extends Seeder
             ],
             [
                 'enunciado' => 'Você tem filhos/enteados ou alguém sob sua guarda?',
-                'tipo' => 'multipla_escolha',
+                'tipo' => 'unica_escolha',
                 'opcoes' => [
                     'Não tenho filhos ou alguém sob minha guarda',
                     'Filho(s) que não moram comigo',
@@ -125,7 +125,7 @@ class PerguntasSeeder extends Seeder
             ],
             [
                 'enunciado' => 'Você ainda quer ter filhos? (apenas para quem marcou a aba relacionamento)',
-                'tipo' => 'multipla_escolha',
+                'tipo' => 'unica_escolha',
                 'opcoes' => [
                     'Sim, com certeza',
                     'Provavelmente um dia',
@@ -135,7 +135,7 @@ class PerguntasSeeder extends Seeder
             ],
             [
                 'enunciado' => 'Qual é a sua escolaridade?',
-                'tipo' => 'multipla_escolha',
+                'tipo' => 'unica_escolha',
                 'opcoes' => [
                     'Prefiro não informar',
                     'Ensino Fundamental',
@@ -277,7 +277,7 @@ class PerguntasSeeder extends Seeder
             ],
             [
                 'enunciado' => 'Caso seja adepto ou simpatizante a uma crença/religião/filosofia e tenha interesse em conhecer pessoas com ideias afins, assinale abaixo (lembrando que a resposta é OPCIONAL)',
-                'tipo' => 'multipla_escolha',
+                'tipo' => 'unica_escolha',
                 'opcoes' => [
                     'Ateu ou agnóstico',
                     'Não tenho religião, mas acredito em Deus',
