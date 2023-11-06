@@ -66,28 +66,34 @@ class PerguntasController extends Controller
     public function createResposta(Request $request)
     {
         try {
-
             $user_id = Auth::id();
     
             $validatedData = $request->validate([
                 'pergunta_id' => 'required|integer',
-                'opcao_selecionada_id' => 'integer|required_without:resposta_discursiva',
-                'resposta_discursiva' => 'string|required_without:opcao_selecionada_id',
+                'opcoes_selecionadas_ids' => 'array|required_without:resposta_discursiva',
+                'resposta_discursiva' => 'string|required_without:opcoes_selecionadas_ids',
             ]);
     
-            if ($request->has('opcao_selecionada_id')) {
-    
-                $validatedData['opcao_selecionada_id'] = $request->input('opcao_selecionada_id');
-                $resposta = PerguntasRespostas::create(array_merge($validatedData, ['user_id' => $user_id]));
-    
+            if ($request->has('opcoes_selecionadas_ids')) {
+
+                $opcoes_selecionadas = $request->input('opcoes_selecionadas_ids');
+                $respostas = [];
+
+                foreach ($opcoes_selecionadas as $opcao_selecionada_id) {
+                    $data = array_merge($validatedData, ['opcao_selecionada_id' => $opcao_selecionada_id, 'user_id' => $user_id]);
+                    $resposta = PerguntasRespostas::create($data);
+                    $respostas[] = $resposta;
+                }
+
+                return response()->json($respostas, 201);
+
             } elseif ($request->has('resposta_discursiva')) {
-    
+
                 $validatedData['resposta_discursiva'] = $request->input('resposta_discursiva');
                 $resposta = PerguntasRespostasDiscursivas::create(array_merge($validatedData, ['user_id' => $user_id]));
-    
+
+                return response()->json($resposta, 201);
             }
-    
-            return response()->json($resposta, 201);
 
         } catch (\Throwable $th) {
 

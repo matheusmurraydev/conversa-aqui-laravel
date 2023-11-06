@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class PerguntasRespostas extends Model
 {
     protected $table = 'perguntas_respostas';
-    protected $fillable = ['pergunta_id', 'opcao_selecionada_id', 'user_id'];
+    protected $fillable = [
+        'pergunta_id',
+        'opcao_selecionada_id',
+        'user_id'
+    ];
 
     public function pergunta()
     {
