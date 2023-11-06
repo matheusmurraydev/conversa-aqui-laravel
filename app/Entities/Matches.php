@@ -18,10 +18,12 @@ class Matches
             ->get();
 
         foreach ($topUsers as $user) {
-            MatchesPeopleToMatch::create([
-                'id_user' => $idUser,
-                'id_user_to_match' => $user->id,
-            ]);
+            if ($idUser !== $user->id) {
+                MatchesPeopleToMatch::create([
+                    'id_user' => $idUser,
+                    'id_user_to_match' => $user->id,
+                ]);
+            }
         }
     }
 }
