@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
-class UserRelAmizade extends Authenticatable
+class UserAmizade extends Authenticatable
 {
     use HasApiTokens;
 
-    protected $table = 'users_rel_amizade';
+    protected $table = 'users_amizade';
     /**
      * The attributes that are mass assignable.
      *
@@ -19,9 +19,8 @@ class UserRelAmizade extends Authenticatable
         'cellphone',
         'data_nascimento',
         'you_are_gender',
-        'you_look_for_gender',
+        'estado_civil',
         'you_look_for_gender_friend',
-        'no_man',
         'user_id',
     ];
 

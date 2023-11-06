@@ -6,6 +6,7 @@ use App\Entities\Matches;
 use App\Http\Controllers\Controller;
 use App\Models\MatchesPeopleToMatch;
 use App\Models\User;
+use App\Models\UserAmizade;
 use Illuminate\Http\Request;
 use App\Models\UserCupom;
 use App\Models\UserRel;
@@ -113,6 +114,7 @@ class RegisterController extends Controller
                 'you_are_gender' => 'required|in:Homem,Mulher,Outros',
                 'you_look_for_gender' => 'required|in:Homem,Mulher,Outros',
                 'you_look_for_gender_friend' => 'required|in:Homem,Mulher,Outros',
+                'no_man' => 'boolean',
                 'password' => 'required|string|min:8',
                 'password_confirmation' => 'required|string|min:8|same:password',
             ]);
@@ -130,6 +132,7 @@ class RegisterController extends Controller
                 'you_are_gender' => $validatedData["you_are_gender"],
                 'you_look_for_gender' => $validatedData["you_look_for_gender"],
                 'you_look_for_gender_friend' => $validatedData["you_look_for_gender_friend"],
+                'no_man' => $validatedData["no_man"],
                 'user_id' => $user->id
             ]);
 
@@ -138,6 +141,50 @@ class RegisterController extends Controller
             $token = $user->createToken('authToken')->plainTextToken;
         
             return response(['user' => compact('user', 'userRelAmizade'), 'token' => $token], 201);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function registerUserAmizade(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'cellphone' => [
+                    'required',
+                    'regex:/^\(\d{2}\) \d{9}$/',
+                ],
+                'data_nascimento' => 'required|date|before_or_equal:today',
+                'you_are_gender' => 'required|in:Homem,Mulher,Outros',
+                'estado_civil' => 'required|in:Solteiro,Namorando,Divorciado,Viúvo,Casado,União Estável',
+                'you_look_for_gender_friend' => 'required|in:Homem,Mulher,Outros',
+                'password' => 'required|string|min:8',
+                'password_confirmation' => 'required|string|min:8|same:password',
+            ]);
+        
+            $user = User::create([
+                'name' => $validatedData["name"],
+                'email' => $validatedData["email"],
+                'password' => bcrypt($validatedData["password"]),
+                'user_type' => 'user_amizade'
+            ]);
+        
+            $userAmizade = UserAmizade::create([
+                'cellphone' => $validatedData["cellphone"],
+                'data_nascimento' => $validatedData["data_nascimento"],
+                'you_are_gender' => $validatedData["you_are_gender"],
+                'estado_civil' => $validatedData["estado_civil"],
+                'you_look_for_gender_friend' => $validatedData["you_look_for_gender_friend"],
+                'user_id' => $user->id
+            ]);
+
+            Matches::feedInitialMatches($user->id, 'user_amizade');
+        
+            $token = $user->createToken('authToken')->plainTextToken;
+        
+            return response(['user' => compact('user', 'userAmizade'), 'token' => $token], 201);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
         }

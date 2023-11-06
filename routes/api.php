@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register/user-cupom', [RegisterController::class, 'registerUserCupom']);
 Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']);
 Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
+Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
