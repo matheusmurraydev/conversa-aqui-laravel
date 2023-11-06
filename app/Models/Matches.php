@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
     protected $fillable = [
         'id_user_1',
         'id_user_2',
+        'option_user_1',
+        'option_user_2',
     ];
     
     public function user1()

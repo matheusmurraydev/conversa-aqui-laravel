@@ -66,12 +66,14 @@ class MatchesController extends Controller
     
             $likes = MatchesLikes::where(['id_user' => $request->input('id_user_liked'), 'id_user_liked' => Auth::id()])
                 ->whereIn('option', ['curtiu', 'super_like'])
-                ->get();
+                ->first();
     
             if ($likes->isNotEmpty()) {
                 Matches::create([
                     'id_user_1' => Auth::id(),
                     'id_user_2' => $request->input('id_user_liked'),
+                    'option_user_1' => $request->input('option'),
+                    'option_user_2' => $likes[0]->option,
                 ]);
     
                 $userMatched = User::find($request->input('id_user_liked'));
