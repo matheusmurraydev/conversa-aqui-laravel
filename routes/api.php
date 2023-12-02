@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ProfilePhotoController;
+use App\Http\Controllers\BloquearController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PassRecoveryController;
 use App\Http\Controllers\PerguntasController;
@@ -25,6 +26,8 @@ Route::post('/register/user-cupom', [RegisterController::class, 'registerUserCup
 Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']);
 Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
 Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
+
+Route::post('/bloquear', [BloquearController::class, 'bloquear']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
