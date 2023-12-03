@@ -28,6 +28,8 @@ Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerU
 Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
 
 Route::post('/bloquear', [BloquearController::class, 'bloquear']);
+Route::post('/denunciar', [BloquearController::class, 'denunciar']);
+
 
 Route::post('/login', [LoginController::class, 'login']);
 
