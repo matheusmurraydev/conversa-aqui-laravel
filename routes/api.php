@@ -9,6 +9,7 @@ use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DenunciarController;
+use App\Http\Controllers\PremiumController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::post('/register/user-amizade', [RegisterController::class, 'registerUserA
 
 Route::post('/bloquear', [BloquearController::class, 'bloquear']);
 Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
+
+Route::post('/seja-premium', [PremiumController::class, 'premium']);
 
 
 Route::post('/login', [LoginController::class, 'login']);
