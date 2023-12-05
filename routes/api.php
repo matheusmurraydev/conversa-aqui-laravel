@@ -8,6 +8,7 @@ use App\Http\Controllers\PerguntasController;
 use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DenunciarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,7 @@ Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerU
 Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
 
 Route::post('/bloquear', [BloquearController::class, 'bloquear']);
-Route::post('/denunciar', [BloquearController::class, 'denunciar']);
+Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
 
 
 Route::post('/login', [LoginController::class, 'login']);
