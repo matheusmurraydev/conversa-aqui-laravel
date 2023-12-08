@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AmizadeController;
 use App\Http\Controllers\Api\ProfilePhotoController;
+use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\BloquearController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PassRecoveryController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DenunciarController;
+use App\Http\Controllers\InteressesController;
 use App\Http\Controllers\PremiumController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,10 @@ Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
 Route::post('/seja-premium', [PremiumController::class, 'premium']);
 
 Route::post('/pedido-amizade', [AmizadeController::class, 'pedidoAmizade']);
+
+Route::post('/convidar-atividade', [AtividadeController::class, 'convidarAtividade']);
+
+Route::post('/definir-interesses', [InteressesController::class, 'definirInteresses']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
