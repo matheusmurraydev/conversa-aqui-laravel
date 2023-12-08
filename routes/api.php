@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AmizadeController;
 use App\Http\Controllers\Api\ProfilePhotoController;
 use App\Http\Controllers\BloquearController;
 use App\Http\Controllers\LoginController;
@@ -34,6 +35,7 @@ Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
 
 Route::post('/seja-premium', [PremiumController::class, 'premium']);
 
+Route::post('/pedido-amizade', [AmizadeController::class, 'pedidoAmizade']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
