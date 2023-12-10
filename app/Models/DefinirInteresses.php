@@ -22,6 +22,22 @@ class DefinirInteresses extends Model
         'prefiro_nao_informar',
     ];
 
+    public function getNivelInteresse($campo)
+    {
+        $niveis = [
+            'iniciante' => 'Iniciante',
+            'intermediario' => 'Intermediário',
+            'avancado' => 'Avançado',
+            '1-2-vezes' => '1 a 2 vezes',
+            '3-5-vezes' => '3 a 5 vezes',
+            '6-ou-mais' => '6 ou mais',
+            'esporadicamente' => 'Esporadicamente',
+            'prefiro_nao_informar' => 'Prefiro não informar',
+        ];
+
+        return $niveis[$campo] ?? '';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');

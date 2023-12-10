@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->timestamps();
 
-            // Foreign keys
+            // Definindo a chave estrangeira
             $table->foreign('id_user')->references('id')->on('users');
 
-            // Checkbox fields
+            // Adicionando colunas booleanas
             $table->boolean('academia')->default(false);
             $table->boolean('atletismo')->default(false);
             $table->boolean('artes_marciais')->default(false);
@@ -36,9 +36,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('definir_interesses', function (Blueprint $table) {
+            // Removendo a chave estrangeira
             $table->dropForeign(['id_user']);
         });
 
+        // Removendo a tabela
         Schema::dropIfExists('definir_interesses');
     }
 };
