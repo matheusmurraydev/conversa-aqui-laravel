@@ -10,6 +10,7 @@ use App\Http\Controllers\PerguntasController;
 use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
 use App\Http\Controllers\InteressesController;
 use App\Http\Controllers\PremiumController;
@@ -42,6 +43,9 @@ Route::post('/pedido-amizade', [AmizadeController::class, 'pedidoAmizade']);
 Route::post('/convidar-atividade', [AtividadeController::class, 'convidarAtividade']);
 
 Route::post('/definir-interesses', [InteressesController::class, 'definirInteresses']);
+
+Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
+
 
 Route::post('/login', [LoginController::class, 'login']);
 
