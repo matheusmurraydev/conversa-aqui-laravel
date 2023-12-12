@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user_sent');
             $table->unsignedBigInteger('id_user_request');
-            $table->text('message')->default(''); // Add a default value (empty string) to the 'message' field            
+            $table->text('message')->nullable(); // Use 'text' instead of 'string'
             $table->timestamps();
 
             // Foreign keys

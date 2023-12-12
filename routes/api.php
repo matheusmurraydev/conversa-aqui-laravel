@@ -14,6 +14,7 @@ use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
 use App\Http\Controllers\InteressesController;
 use App\Http\Controllers\PremiumController;
+use App\Http\Controllers\RestringirVisualizacaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,7 @@ Route::post('/definir-interesses', [InteressesController::class, 'definirInteres
 
 Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
 
+Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
 
 Route::post('/login', [LoginController::class, 'login']);
 

@@ -18,8 +18,14 @@ class DefinirInteresses extends Model
         'artes_marciais',
         'basquete',
         'futebol',
-        'nenhum',
+        'nenhum', 
+        'catolico',
+        'evangelico',
+        'budista',
+        'candomble',
+        'espirita',
         'prefiro_nao_informar',
+        'detalhes', // Verifique se este campo está relacionado corretamente
     ];
 
     public function getNivelInteresse($campo)
@@ -32,6 +38,10 @@ class DefinirInteresses extends Model
             '3-5-vezes' => '3 a 5 vezes',
             '6-ou-mais' => '6 ou mais',
             'esporadicamente' => 'Esporadicamente',
+            'simpatizante' => 'Simpatizante',
+            'sou_adepto_frequentador' => 'Sou adepto e frequentador',
+            'sou_musico' => 'Sou músico',
+            'sou_adepto_mas_nao_frequento' => 'Sou adepto mas não frequento',
             'prefiro_nao_informar' => 'Prefiro não informar',
         ];
 
