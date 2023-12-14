@@ -11,10 +11,17 @@ class Restringir extends Model
         'amigos',
         'parentes',
         'matches',
+        'id_user_block',
+        'id_user_blocked',
     ];
 
-    public function userRestricted    ()
+    public function userRestricted()
     {
         return $this->belongsTo(User::class, 'id_user_blocked');
+    }
+
+    public function userBlocking()
+    {
+        return $this->belongsTo(User::class, 'id_user_block');
     }
 }
