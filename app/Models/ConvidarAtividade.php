@@ -11,8 +11,10 @@ class ConvidarAtividade extends Model
     protected $fillable = [
         'id_user_sent',
         'id_user_request',
-        'message', // Add the new 'message' field to the fillable array
+        'atividade', // Novo campo adicionado
     ];
+
+    // ...
 
     public function userSent()
     {
@@ -22,5 +24,11 @@ class ConvidarAtividade extends Model
     public function userRequest()
     {
         return $this->belongsTo(User::class, 'id_user_request');
+    }
+
+    // Novo método para obter opções de atividade
+    public static function getAtividadeOptions()
+    {
+        return ['Futebol', 'Academia', 'Natação'];
     }
 }

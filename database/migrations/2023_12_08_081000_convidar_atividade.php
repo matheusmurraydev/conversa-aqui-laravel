@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_user_sent');
             $table->unsignedBigInteger('id_user_request');
-            $table->text('message')->nullable(); // Use 'text' instead of 'string'
+            $table->string('atividade'); // Adiciona o campo 'atividade'
             $table->timestamps();
 
             // Foreign keys
-            $table->foreign('id_user_sent')->references('id')->on('users');
-            $table->foreign('id_user_request')->references('id')->on('users');
+            $table->foreign('id_user_sent')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_user_request')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
