@@ -13,6 +13,11 @@ class Restringir extends Model
         'matches',
         'id_user_block',
         'id_user_blocked',
+        'palavras_chave', // Adicione o campo 'palavras_chave' aos campos preenchíveis
+    ];
+
+    protected $casts = [
+        'palavras_chave' => 'array', // Especifica que o campo 'palavras_chave' deve ser tratado como um array
     ];
 
     public function userRestricted()
