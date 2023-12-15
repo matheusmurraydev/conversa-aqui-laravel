@@ -4,6 +4,7 @@ use App\Http\Controllers\AmizadeController;
 use App\Http\Controllers\Api\ProfilePhotoController;
 use App\Http\Controllers\AtividadeController;
 use App\Http\Controllers\BloquearController;
+use App\Http\Controllers\ChamadaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PassRecoveryController;
 use App\Http\Controllers\PerguntasController;
@@ -50,6 +51,9 @@ Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
 Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
 
 Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
+
+Route::post('/start-call', [ChamadaController::class, 'startCall']);
+Route::post('/end-call', [ChamadaController::class, 'endCall']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
