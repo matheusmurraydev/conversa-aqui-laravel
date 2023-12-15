@@ -47,6 +47,8 @@ Route::post('/definir-interesses', [InteressesController::class, 'definirInteres
 
 Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
 
+Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
+
 Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
 
 Route::post('/login', [LoginController::class, 'login']);
