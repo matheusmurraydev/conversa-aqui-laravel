@@ -29,4 +29,21 @@ class CurtidasController extends Controller
 
         }
     }
+
+    public function interCurtidas(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'id_user_sent' => 'required|exists:users,id',
+            ]);
+
+            $idsCurtidos = Curtidas::where('id_user_sent', $validatedData['id_user_sent'])
+                ->pluck('id_user_request');
+
+            return response()->json(['ids_curtidos' => $idsCurtidos], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
 }
