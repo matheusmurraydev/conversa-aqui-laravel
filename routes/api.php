@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdicionarUsuariosVisualizacaoController;
 use App\Http\Controllers\AmizadeController;
 use App\Http\Controllers\Api\ProfilePhotoController;
 use App\Http\Controllers\AtividadeController;
@@ -14,7 +15,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
 use App\Http\Controllers\InteressesController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PremiumController;
+use App\Http\Controllers\RestringirInteressesController;
 use App\Http\Controllers\RestringirVisualizacaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +54,12 @@ Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
 Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
 
 Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
+
+Route::post('/restringir-interesses', [RestringirInteressesController::class, 'restringir-interesses']);
+
+Route::post('/adicionar-usuarios-visu', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuariosVisu']);
+
+Route::post('/meu-perfil', [PerfilController::class, 'meu-perfil']);
 
 Route::post('/start-call', [ChamadaController::class, 'startCall']);
 Route::post('/end-call', [ChamadaController::class, 'endCall']);
