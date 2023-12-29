@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdicionarUsuariosVisualizacaoController;
 use App\Http\Controllers\AmizadeController;
 use App\Http\Controllers\Api\ProfilePhotoController;
 use App\Http\Controllers\AtividadeController;
@@ -50,6 +51,8 @@ Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
 Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
 
 Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
+
+Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
