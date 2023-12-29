@@ -57,7 +57,7 @@ Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir
 
 Route::post('/restringir-interesses', [RestringirInteressesController::class, 'restringir-interesses']);
 
-Route::post('/adicionar-usuarios-visu', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuariosVisu']);
+Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
 
 Route::post('/meu-perfil', [PerfilController::class, 'meu-perfil']);
 
