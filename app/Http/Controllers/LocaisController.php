@@ -21,6 +21,11 @@ class LocaisController extends Controller
                 'imagens.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validação para imagens
             ]);
 
+            // Verificar se o local já existe pelo endereço
+            if ($this->localJaExiste($validatedData['endereco'])) {
+                return response()->json(['error' => 'Local já existe'], 400);
+            }
+
             $imagens = [];
             if ($request->hasFile('imagens')) {
                 foreach ($request->file('imagens') as $imagem) {
@@ -46,8 +51,13 @@ class LocaisController extends Controller
 
             return response()->json(['message' => "Local criado com sucesso"], 200);
         } catch (\Throwable $th) {
-
             return response()->json(['error' => $th->getMessage()], 500);
         }
+    }
+
+    // Função para verificar se o local já existe pelo endereço
+    private function localJaExiste($endereco)
+    {
+        return Locais::where('endereco', $endereco)->exists();
     }
 }
