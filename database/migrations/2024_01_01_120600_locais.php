@@ -14,6 +14,7 @@ class Locais extends Migration
             $table->id();
             $table->string('endereco');
             $table->string('nome_lugar');
+            $table->string('tipo_local');
             $table->string('nome_pessoa')->nullable();
             $table->json('imagens')->nullable();
             $table->timestamps();
