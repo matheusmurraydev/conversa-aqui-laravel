@@ -14,7 +14,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
 use App\Http\Controllers\InteressesController;
+use App\Http\Controllers\LocaisController;
 use App\Http\Controllers\PremiumController;
+use App\Http\Controllers\RestricaoFotosController;
 use App\Http\Controllers\RestringirVisualizacaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,7 @@ Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerU
 Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
 
 Route::post('/bloquear', [BloquearController::class, 'bloquear']);
+
 Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
 
 Route::post('/seja-premium', [PremiumController::class, 'premium']);
@@ -53,6 +56,10 @@ Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
 Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
 
 Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
+
+Route::post('/restringir-foto/1', [RestricaoFotosController::class, 'restringirFoto']);
+
+Route::post('/criar-local', [LocaisController::class, 'criarLocal']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
