@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Locais extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'endereco',
         'nome_lugar',
         'nome_pessoa',
+        'tipo_local',
         'imagens',
-        'tipo_local'
+        'interesses',
+        'gosto_musical',
     ];
 
     protected $casts = [
         'imagens' => 'array',
+        'interesses' => 'array',
     ];
 }
