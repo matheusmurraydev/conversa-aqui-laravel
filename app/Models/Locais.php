@@ -14,6 +14,7 @@ class Locais extends Model
         'nome_lugar',
         'nome_pessoa',
         'imagens',
+        'tipo_local'
     ];
 
     protected $casts = [
