@@ -13,6 +13,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
+use App\Http\Controllers\DenunciarLocaisController;
 use App\Http\Controllers\InteressesController;
 use App\Http\Controllers\LocaisController;
 use App\Http\Controllers\PremiumController;
@@ -57,9 +58,11 @@ Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir
 
 Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
 
-Route::post('/restringir-foto/1', [RestricaoFotosController::class, 'restringirFoto']);
-
 Route::post('/criar-local', [LocaisController::class, 'criarLocal']);
+
+Route::post('/denunciar-local', [DenunciarLocaisController::class, 'denunciarLocal']);
+
+Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'DenunciarLocalContImpropio']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
