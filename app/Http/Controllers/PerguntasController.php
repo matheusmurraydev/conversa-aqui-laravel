@@ -9,7 +9,6 @@ use App\Models\PerguntasOpcoes;
 use App\Models\PerguntasRespostas;
 use App\Models\PerguntasRespostasDiscursivas;
 use Illuminate\Http\Request;
-use App\Models\UserCupom;
 use Illuminate\Support\Facades\Auth;
 
 class PerguntasController extends Controller
@@ -87,7 +86,8 @@ class PerguntasController extends Controller
 
                 return response()->json($respostas, 201);
 
-            } elseif ($request->has('resposta_discursiva')) {
+            }
+            if ($request->has('resposta_discursiva')) {
 
                 $validatedData['resposta_discursiva'] = $request->input('resposta_discursiva');
                 $resposta = PerguntasRespostasDiscursivas::create(array_merge($validatedData, ['user_id' => $user_id]));
