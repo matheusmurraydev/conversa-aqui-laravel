@@ -8,16 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Denuncia extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'ID_sent',
-        'ID_denuncied',
-        'conteudo_improprio',
-        'conteudo_violento',
-        'texto_adicional',
-        'arquivo',
-        'conteudo_falso',
-        'solicitou_dinheiro',
-        'urgente',
-    ];
-}
+    
+     protected $fillable = [
+            'conteudo_improprio',
+            'conteudo_violento',
+            'texto_adicional',
+            'arquivo',
+            'conteudo_falso',
+            'solicitou_dinheiro',
+            'urgente',
+            'id_sent',
+            'id_denuncied',
+            'user_id',
+        ];
+    
+        // ...
+    }
+    
