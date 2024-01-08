@@ -38,31 +38,10 @@ Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']
 Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
 Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
 
-Route::post('/bloquear', [BloquearController::class, 'bloquear']);
-
-Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
 
 Route::post('/seja-premium', [PremiumController::class, 'premium']);
 
-Route::post('/pedido-amizade', [AmizadeController::class, 'pedidoAmizade']);
-
-Route::post('/convidar-atividade', [AtividadeController::class, 'convidarAtividade']);
-
 Route::post('/definir-interesses', [InteressesController::class, 'definirInteresses']);
-
-Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
-
-Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
-
-Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
-
-Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
-
-Route::post('/criar-local', [LocaisController::class, 'criarLocal']);
-
-Route::post('/denunciar-local', [DenunciarLocaisController::class, 'denunciarLocal']);
-
-Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'DenunciarLocalContImpropio']);
 
 Route::post('/login', [LoginController::class, 'login']);
 
@@ -90,7 +69,31 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/matches/like', [MatchesController::class, 'likePeople']);
 
     Route::post('/chat/message', [ChatController::class, 'newChatMessage']);
+
+    Route::post('/bloquear', [BloquearController::class, 'bloquear']);
+
+    Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
+
+    Route::post('/pedido-amizade', [AmizadeController::class, 'pedidoAmizade']);
+
+    Route::post('/convidar-atividade', [AtividadeController::class, 'convidarAtividade']);
+
+    Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
+
+    Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
+
+    Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
+
+    Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
+
+    Route::post('/criar-local', [LocaisController::class, 'criarLocal']);
+
+    Route::post('/denunciar-local', [DenunciarLocaisController::class, 'denunciarLocal']);
+
+    Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'DenunciarLocalContImpropio']);
+
 });
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

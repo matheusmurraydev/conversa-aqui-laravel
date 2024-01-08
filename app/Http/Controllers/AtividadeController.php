@@ -8,19 +8,25 @@ use App\Models\ConvidarAtividade;
 
 class AtividadeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     // ... outros métodos do controlador ...
 
     public function convidarAtividade(Request $request)
     {
         try {
+            $user = Auth::user();
+
             $validatedData = $request->validate([
-                'id_user_sent' => 'required|exists:users,id',
                 'id_user_request' => 'required|exists:users,id',
                 'atividade' => 'required|in:Futebol,Academia,Natação',
             ]);
 
             $dataToInsert = [
-                'id_user_sent' => $validatedData['id_user_sent'],
+                'id_user_sent' => $user->id,
                 'id_user_request' => $validatedData['id_user_request'],
                 'atividade' => $validatedData['atividade'],
             ];

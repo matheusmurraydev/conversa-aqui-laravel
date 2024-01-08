@@ -7,6 +7,11 @@ use App\Models\Restringir;
 
 class RestringirVisualizacaoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     // ... outros métodos do controlador ...
 
     public function restringir(Request $request)
@@ -18,6 +23,7 @@ class RestringirVisualizacaoController extends Controller
                 'amigos' => 'nullable|boolean',
                 'parentes' => 'nullable|boolean',
                 'matches' => 'nullable|boolean',
+                'id_user_blocked' => 'required|exists:users,id|not_in:' . auth()->id(),
             ]);
 
             // Criar um array associativo com as opções
@@ -26,10 +32,14 @@ class RestringirVisualizacaoController extends Controller
                 'amigos' => $validatedData['amigos'] ?? false,
                 'parentes' => $validatedData['parentes'] ?? false,
                 'matches' => $validatedData['matches'] ?? false,
+                'id_user_blocked' => $validatedData['id_user_blocked'],
             ];
 
+            // Obter o ID do usuário autenticado
+            $id_user_block = auth()->id();
+
             // Criar uma nova entrada na tabela 'restringirs'
-            Restringir::create($options);
+            Restringir::create(array_merge(['id_user_block' => $id_user_block], $options));
 
             // Responder com uma mensagem de sucesso
             return response()->json(['message' => "Restringido com sucesso"], 200);
@@ -42,14 +52,16 @@ class RestringirVisualizacaoController extends Controller
     public function restringir_usuarios(Request $request)
     {
         try {
-            // Validate request data
+            // Obter o ID do usuário autenticado
+            $id_user_block = auth()->id();
+
+            // Validar os dados da solicitação
             $validatedData = $request->validate([
-                'id_user_block' => 'required|exists:users,id',
-                'id_user_blocked' => 'required|exists:users,id',
+                'id_user_blocked' => 'required|exists:users,id|not_in:' . $id_user_block,
             ]);
 
             // Check if the restriction record already exists
-            $existingRestriction = Restringir::where('id_user_block', $validatedData['id_user_block'])
+            $existingRestriction = Restringir::where('id_user_block', $id_user_block)
                 ->where('id_user_blocked', $validatedData['id_user_blocked'])
                 ->first();
 
@@ -59,19 +71,19 @@ class RestringirVisualizacaoController extends Controller
 
             // Create a new restriction record
             Restringir::create([
-                'id_user_block' => $validatedData['id_user_block'],
+                'id_user_block' => $id_user_block,
                 'id_user_blocked' => $validatedData['id_user_blocked'],
             ]);
 
             return response()->json([
-                'message' => "Usuário de id {$validatedData['id_user_block']} restringiu Usuário de id {$validatedData['id_user_blocked']} com sucesso"
+                'message' => "Usuário de id {$id_user_block} restringiu Usuário de id {$validatedData['id_user_blocked']} com sucesso"
             ], 201);
         } catch (\Throwable $th) {
             // Handle exceptions
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
-    
+
     public function adicionarPalavraChave(Request $request, $restringirId)
     {
         $restringir = Restringir::find($restringirId);

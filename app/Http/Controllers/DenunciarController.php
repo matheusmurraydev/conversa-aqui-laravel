@@ -5,15 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Denuncia;
+use App\Models\User;
 
 class DenunciarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function denunciar(Request $request)
     {
         try {
+            $user = Auth::user();
+
+            $denunciedUser = User::where('id', '!=', $user->id)->first();
+
+            if (!$denunciedUser) {
+                return response()->json(['error' => 'Não foi possível encontrar outro usuário para denunciar.'], 404);
+            }
+
             $validatedData = $request->validate([
-                'ID_sent' => 'required|numeric', // assuming 'ID_sent' is required and numeric
-                'ID_denuncied' => 'required|numeric', // assuming 'ID_denuncied' is required and numeric
                 'conteudo_improprio' => 'boolean',
                 'conteudo_violento' => 'boolean',
                 'texto_adicional' => 'nullable|string',
@@ -23,18 +35,13 @@ class DenunciarController extends Controller
                 'urgente' => 'nullable|boolean',
             ]);
 
-            // Ensure that 'conteudo_improprio' is set in the validated data
-            $validatedData['conteudo_improprio'] = $request->input('conteudo_improprio');
-
-            // Create a new Denuncia instance and fill it with validated data
             $denuncia = new Denuncia();
             $denuncia->fill($validatedData);
 
-            // Set 'ID_sent' and 'ID_denuncied' on the Denuncia model
-            $denuncia->ID_sent = $request->input('ID_sent');
-            $denuncia->ID_denuncied = $request->input('ID_denuncied');
-
-            // Save the denúncia in the database
+            $denuncia->id_sent = $user->id;
+            $denuncia->id_denuncied = $denunciedUser->id; 
+            
+            $denuncia->user_id = $user->id; 
             $denuncia->save();
 
             return response()->json(['message' => "Denúncia enviada com sucesso", 'denuncia' => $denuncia], 200);
