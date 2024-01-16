@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CheckIn;
 use Illuminate\Http\Request;
 use App\Models\Locais;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class LocaisController extends Controller
 {
@@ -64,4 +67,43 @@ class LocaisController extends Controller
     {
         return Locais::where('endereco', $endereco)->exists();
     }
+
+    public function CheckInLocal(Request $request)
+    {
+        try {
+            // Obter o ID do usuário autenticado
+            $userId = Auth::id();
+    
+            // Validar os dados da solicitação
+            $validatedData = $request->validate([
+                'enderecoLocal' => 'required|string', // Certifique-se de que o campo está presente no corpo
+                // Outros campos necessários
+            ]);
+    
+            // Verificar se o local existe pelo endereço
+            $local = Locais::where('endereco', $validatedData['enderecoLocal'])->first();
+    
+            if (!$local) {
+                return response()->json(['error' => 'Local não encontrado'], 404);
+            }
+    
+            // Verificar se o usuário já fez check-in neste local
+            $checkInExistente = $local->checkIns()->where('user_id', $userId)->exists();
+    
+            if ($checkInExistente) {
+                return response()->json(['error' => 'Usuário já fez check-in neste local'], 400);
+            }
+    
+            // Criar o check-in
+            $checkIn = CheckIn::create([
+                'user_id' => $userId,
+                'local_id' => $local->id,
+            ]);
+    
+            return response()->json(['message' => 'Check-in realizado com sucesso'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
 }
+    

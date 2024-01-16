@@ -20,4 +20,10 @@ class Locais extends Model
         'imagens' => 'array',
         'interesses' => 'array',
     ];
+
+    public function checkIns()
+    {
+        return $this->hasMany(CheckIn::class, 'local_id');
+    }
 }
+   
