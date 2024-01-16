@@ -14,6 +14,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
 use App\Http\Controllers\DenunciarLocaisController;
+use App\Http\Controllers\GrupoLocaisController;
 use App\Http\Controllers\InteressesController;
 use App\Http\Controllers\LocaisController;
 use App\Http\Controllers\PremiumController;
@@ -93,6 +94,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'DenunciarLocalContImpropio']);
     
     Route::post('/checkin', [LocaisController::class, 'CheckInLocal']);
+
+    Route::post('/criar-grupo-local', [GrupoLocaisController::class, 'CriarGrupoLocal']);
+
 });
 
 
