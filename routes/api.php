@@ -14,6 +14,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CurtidasController;
 use App\Http\Controllers\DenunciarController;
 use App\Http\Controllers\DenunciarLocaisController;
+use App\Http\Controllers\EventoLocaisController;
 use App\Http\Controllers\GrupoLocaisController;
 use App\Http\Controllers\InteressesController;
 use App\Http\Controllers\LocaisController;
@@ -91,12 +92,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/denunciar-local', [DenunciarLocaisController::class, 'denunciarLocal']);
 
-    Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'DenunciarLocalContImpropio']);
+    Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'denunciarLocalContImpropio']);
     
-    Route::post('/checkin', [LocaisController::class, 'CheckInLocal']);
-    Route::get('/checkins', [LocaisController::class, 'GetCheckIns']);
+    Route::post('/checkin', [LocaisController::class, 'checkInLocal']);
+    Route::get('/checkins', [LocaisController::class, 'getCheckIns']);
 
-    Route::post('/criar-grupo-local', [GrupoLocaisController::class, 'CriarGrupoLocal']);
+    Route::post('/criar-grupo-local', [GrupoLocaisController::class, 'criarGrupoLocal']);
+
+    Route::post('/criar-evento', [EventoLocaisController::class, 'criarEvento']);
+    Route::get('/obter-locais', [EventoLocaisController::class, 'obterLocais']);
+
+
 
 });
 
