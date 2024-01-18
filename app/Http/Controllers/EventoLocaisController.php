@@ -5,7 +5,8 @@
     use Illuminate\Http\Request;
     use App\Models\Evento;
     use App\Models\Locais;
-    
+    use Carbon\Carbon;
+
     class EventoLocaisController extends Controller
     {
         public function criarEvento(Request $request)
@@ -64,5 +65,19 @@
                 return response()->json(['error' => $th->getMessage()], 500);
             }
         }
+        public function obterProximosEventos()
+    {
+        try {
+            // Obtenha os próximos eventos ordenados pela data
+            $proximosEventos = Evento::where('data_evento', '>=', Carbon::now())
+                ->orderBy('data_evento')
+                ->get();
+
+            // Retorne os próximos eventos como resposta JSON
+            return response()->json(['proximos_eventos' => $proximosEventos], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
     }
+}
 
