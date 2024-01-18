@@ -94,6 +94,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'DenunciarLocalContImpropio']);
     
     Route::post('/checkin', [LocaisController::class, 'CheckInLocal']);
+    Route::get('/checkins', [LocaisController::class, 'GetCheckIns']);
 
     Route::post('/criar-grupo-local', [GrupoLocaisController::class, 'CriarGrupoLocal']);
 

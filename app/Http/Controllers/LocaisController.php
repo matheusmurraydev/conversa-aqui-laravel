@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 
+
 class LocaisController extends Controller
 {
     // ... outros métodos do controlador ...
@@ -105,5 +106,19 @@ class LocaisController extends Controller
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
+    public function GetCheckIns()
+{
+    try {
+        // Obter o ID do usuário autenticado
+        $userId = Auth::id();
+
+        // Obter todos os IDs dos usuários que fizeram check-in
+        $userCheckIns = CheckIn::where('user_id', $userId)->pluck('user_id');
+
+        return response()->json(['user_check_ins' => $userCheckIns], 200);
+    } catch (\Throwable $th) {
+        return response()->json(['error' => $th->getMessage()], 500);
+    }
+}
 }
     
