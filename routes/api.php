@@ -48,10 +48,9 @@ Route::post('/definir-interesses', [InteressesController::class, 'definirInteres
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/send-recover-code', [PassRecoveryController::class, 'sendRecoverCode']);
-// Route::post('/confirm-recovery-code', [PassRecoveryController::class, 'confirmCode']);
-// Route::post('/new-password', [PassRecoveryController::class, 'newPassword']);
-// Route::post('/new-code', [PassRecoveryController::class, 'sendNewCode']);
-
+Route::post('/confirm-recovery-code', [PassRecoveryController::class, 'confirmCode']);
+Route::post('/new-password', [PassRecoveryController::class, 'newPassword']);
+Route::post('/new-code', [PassRecoveryController::class, 'sendNewCode']);
 Route::post('/forgot-password', [PassRecoveryController::class, 'sendResetLinkEmail']);
 Route::post('/reset-password', [PassRecoveryController::class, 'reset']);
 
