@@ -71,36 +71,28 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/chat/message', [ChatController::class, 'newChatMessage']);
 
+    //interações
     Route::post('/bloquear', [BloquearController::class, 'bloquear']);
-
     Route::post('/denunciar', [DenunciarController::class, 'denunciar']);
-
     Route::post('/pedido-amizade', [AmizadeController::class, 'pedidoAmizade']);
-
     Route::post('/convidar-atividade', [AtividadeController::class, 'convidarAtividade']);
-
     Route::post('/curtidas', [CurtidasController::class, 'curtidas']);
-
     Route::post('/intercurtidas', [CurtidasController::class, 'intercurtidas']);
-
     Route::post('/restringir', [RestringirVisualizacaoController::class, 'restringir']);
-
     Route::post('/adicionar-usuarios', [AdicionarUsuariosVisualizacaoController::class, 'adicionarUsuarios']);
 
+    //locais
     Route::post('/criar-local', [LocaisController::class, 'criarLocal']);
-
     Route::post('/denunciar-local', [DenunciarLocaisController::class, 'denunciarLocal']);
-
     Route::post('/denunciar-local-improprio', [DenunciarLocaisController::class, 'denunciarLocalContImpropio']);
-    
     Route::post('/checkin', [LocaisController::class, 'checkInLocal']);
     Route::get('/checkins', [LocaisController::class, 'getCheckIns']);
-
     Route::post('/criar-grupo-local', [GrupoLocaisController::class, 'criarGrupoLocal']);
-
     Route::post('/criar-evento', [EventoLocaisController::class, 'criarEvento']);
     Route::get('/obter-locais', [EventoLocaisController::class, 'obterLocais']);    
-    Route::get('/obter-proximos-eventos', [EventoLocaisController::class, 'obterProximosEventos']);
+    Route::get('/obter-proximos-eventos', [EventoLocaisController::class, 'obterProximosEventos']);   
+    Route::post('/bloquear-evento', [EventoLocaisController::class, 'BloquearEventos']);
+
 
 
 

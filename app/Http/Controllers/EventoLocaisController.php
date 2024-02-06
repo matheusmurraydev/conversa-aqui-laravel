@@ -6,6 +6,7 @@
     use App\Models\Evento;
     use App\Models\Locais;
     use Carbon\Carbon;
+    use Illuminate\Support\Facades\Auth;
 
     class EventoLocaisController extends Controller
     {
@@ -79,5 +80,35 @@
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
+    public function BloquearEventos(Request $request)
+    {
+        // Validação dos dados recebidos
+        $request->validate([
+            'id_evento' => 'required|numeric', // ou 'required|string' dependendo do tipo
+            'descricao' => 'required|string',
+            'urgente' => 'required|boolean',
+            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Exemplo para validar uma imagem opcional
+        ]);
+    
+        // Obtenha o ID do usuário autenticado
+        $idUsuario = Auth::id();
+    
+        // Obtenha os dados da requisição
+        $idEvento = $request->input('id_evento');
+        $descricao = $request->input('descricao');
+        $urgente = $request->input('urgente');
+        
+        // Faça algo com a imagem se ela estiver presente
+        if ($request->hasFile('imagem')) {
+            $imagem = $request->file('imagem');
+            // Faça o upload ou processamento da imagem aqui
+        } else {
+            $imagem = null;
+        }
+    
+        // Agora você pode usar os dados como necessário (por exemplo, salvar no banco de dados)
+        
+        // Retorne uma resposta adequada
+        return response()->json(['message' => 'Evento bloqueado com sucesso'], 200);
+    }
 }
-
