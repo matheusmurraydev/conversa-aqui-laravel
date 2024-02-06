@@ -126,4 +126,30 @@
 
         return response()->json(['message' => 'Evento bloqueado com sucesso'], 200);
     }
+
+    public function UsuarioEvento(Request $request)
+    {
+        // Obtenha o usuário autenticado
+        $user = Auth::user();
+
+        // Validar os dados recebidos do corpo da solicitação
+        $request->validate([
+            'id_evento' => ['required', 'numeric'], // Id do evento
+            'id_local' => ['required', 'numeric'], // Id do local
+            'acao' => ['required', 'string', 'in:eu_vou,provavelmente_vou,nao_vou'], // Ação válida
+        ]);
+
+        // Obter os dados do corpo da solicitação
+        $id_evento = $request->input('id_evento');
+        $id_local = $request->input('id_local');
+        $acao = $request->input('acao');
+
+        // Use o ID do usuário autenticado
+        $id_usuario = $user->id;
+
+        // Aqui você pode fazer o que for necessário com esses dados, como salvar no banco de dados, por exemplo.
+        
+        // Retornar uma resposta de sucesso
+        return response()->json(['message' => 'Dados recebidos com sucesso', 'data' => compact('id_usuario', 'id_evento', 'id_local', 'acao')]);
+    }
 }

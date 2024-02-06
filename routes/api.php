@@ -95,6 +95,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/obter-proximos-eventos', [EventoLocaisController::class, 'obterProximosEventos']);   
     Route::post('/bloquear-denunciar-evento', [EventoLocaisController::class, 'BloquearDenunciarEventos']);
 
+    Route::post('/usuario-evento', [EventoLocaisController::class, 'UsuarioEvento']);
+
+
     Route::post('/criar-voucher', [VoucherController::class, 'criarVoucher']);
 
 
