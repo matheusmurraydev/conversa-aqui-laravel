@@ -89,6 +89,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/checkin', [LocaisController::class, 'checkInLocal']);
     Route::get('/checkins', [LocaisController::class, 'getCheckIns']);
     Route::post('/criar-grupo-local', [GrupoLocaisController::class, 'criarGrupoLocal']);
+    Route::get('/listar-grupo-local', [GrupoLocaisController::class, 'listarGrupoLocal']);
     Route::post('/criar-evento', [EventoLocaisController::class, 'criarEvento']);
     Route::get('/obter-locais', [EventoLocaisController::class, 'obterLocais']);    
     Route::get('/obter-proximos-eventos', [EventoLocaisController::class, 'obterProximosEventos']);   
