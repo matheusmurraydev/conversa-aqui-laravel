@@ -21,6 +21,7 @@ use App\Http\Controllers\LocaisController;
 use App\Http\Controllers\PremiumController;
 use App\Http\Controllers\RestricaoFotosController;
 use App\Http\Controllers\RestringirVisualizacaoController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -91,7 +92,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/criar-evento', [EventoLocaisController::class, 'criarEvento']);
     Route::get('/obter-locais', [EventoLocaisController::class, 'obterLocais']);    
     Route::get('/obter-proximos-eventos', [EventoLocaisController::class, 'obterProximosEventos']);   
-    Route::post('/bloquear-evento', [EventoLocaisController::class, 'BloquearEventos']);
+    Route::post('/bloquear-denunciar-evento', [EventoLocaisController::class, 'BloquearDenunciarEventos']);
+
+    Route::post('/criar-voucher', [VoucherController::class, 'criarVoucher']);
+
 
 
 
