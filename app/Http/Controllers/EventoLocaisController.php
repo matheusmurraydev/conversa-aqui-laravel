@@ -80,7 +80,7 @@
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
-    public function BloquearEventos(Request $request)
+    public function BloquearDenunciarEventos(Request $request)
     {
         // Validação dos dados recebidos
         $request->validate([
@@ -109,6 +109,21 @@
         // Agora você pode usar os dados como necessário (por exemplo, salvar no banco de dados)
         
         // Retorne uma resposta adequada
+        return response()->json(['message' => 'Evento bloqueado com sucesso'], 200);
+    }
+    public function BloquearEventos(Request $request)
+    {
+        // Validação dos dados recebidos
+        $request->validate([
+            'id_evento' => 'required|numeric', // ou 'required|string' dependendo do tipo
+        ]);
+    
+        // Obtenha o ID do usuário autenticado
+        $idUsuario = Auth::id();
+    
+        // Obtenha os dados da requisição
+        $idEvento = $request->input('id_evento');
+
         return response()->json(['message' => 'Evento bloqueado com sucesso'], 200);
     }
 }
