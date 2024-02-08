@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PerguntasEnunciados extends Model
 {
     protected $table = 'perguntas_enunciados';
-    protected $fillable = ['enunciado', 'tipo'];
+    protected $fillable = ['enunciado', 'tipo', 'basica'];
 
     public function opcoes()
     {

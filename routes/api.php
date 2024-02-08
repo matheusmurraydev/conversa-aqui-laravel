@@ -41,6 +41,9 @@ Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']
 Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
 Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
 
+Route::get('/perguntas-enunciados/amizade', [PerguntasController::class, 'getByBasicaAmizade']);
+Route::get('/perguntas-enunciados/relacionamento', [PerguntasController::class, 'getByBasicaRelacionamento']);
+
 
 Route::post('/seja-premium', [PremiumController::class, 'premium']);
 
@@ -62,7 +65,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/perguntas/basicas', [PerguntasController::class, 'indexWithOpcoesBasicas']);
     Route::post('/pergunta', [PerguntasController::class, 'createPergunta']);
     Route::post('/pergunta/resposta', [PerguntasController::class, 'createResposta']);
-
+    Route::put('/perguntas-enunciados/atualizar-basica', [PerguntasController::class, 'atualizarBasica']);
+   
     Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
     Route::post('/profile/photo', [ProfilePhotoController::class, 'uploadPhoto']);
 
