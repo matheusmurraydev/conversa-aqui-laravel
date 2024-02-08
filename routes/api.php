@@ -36,13 +36,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register/user-cupom', [RegisterController::class, 'registerUserCupom']);
-Route::post('/register/user-rel', [RegisterController::class, 'registerUserRel']);
-Route::post('/register/user-rel-amizade', [RegisterController::class, 'registerUserRelAmizade']);
-Route::post('/register/user-amizade', [RegisterController::class, 'registerUserAmizade']);
-
-Route::get('/perguntas-enunciados/amizade', [PerguntasController::class, 'getByBasicaAmizade']);
-Route::get('/perguntas-enunciados/relacionamento', [PerguntasController::class, 'getByBasicaRelacionamento']);
+Route::post('/register', [RegisterController::class, 'register']);
 
 
 Route::post('/seja-premium', [PremiumController::class, 'premium']);
@@ -57,6 +51,9 @@ Route::post('/new-password', [PassRecoveryController::class, 'newPassword']);
 Route::post('/new-code', [PassRecoveryController::class, 'sendNewCode']);
 Route::post('/forgot-password', [PassRecoveryController::class, 'sendResetLinkEmail']);
 Route::post('/reset-password', [PassRecoveryController::class, 'reset']);
+
+Route::get('/perguntas-enunciados/amizade', [PerguntasController::class, 'getByBasicaAmizade']);
+Route::get('/perguntas-enunciados/relacionamento', [PerguntasController::class, 'getByBasicaRelacionamento']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
