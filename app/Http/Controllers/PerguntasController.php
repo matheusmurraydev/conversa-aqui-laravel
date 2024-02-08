@@ -10,6 +10,8 @@ use App\Models\PerguntasRespostas;
 use App\Models\PerguntasRespostasDiscursivas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class PerguntasController extends Controller
 {
@@ -23,11 +25,40 @@ class PerguntasController extends Controller
     public function indexWithOpcoesBasicas()
     {
         $userType = Auth::user()->user_type;
-        
-        $perguntas = PerguntasBasicas::where("user_type", $userType)->with('enunciados.opcoes')->get();
-
+    
+        // Valores permitidos para perguntas consideradas básicas
+        $valoresBasicos = ['Relacionamento', 'Amizade'];
+    
+        // Consulta as perguntas enunciados que são consideradas básicas com os valores especificados
+        $perguntas = PerguntasEnunciados::whereIn('basica', $valoresBasicos)
+                        ->where('tipo', $userType) // Considerando que 'tipo' é semelhante a 'user_type'
+                        ->with('opcoes') // Carrega as opções relacionadas
+                        ->get();
+    
         return response()->json($perguntas);
     }
+    
+    public function getByBasicaAmizade()
+    {
+        $perguntas = PerguntasEnunciados::where('basica', 'amizade')
+                        ->with('opcoes')
+                        ->get();
+        
+        return response()->json($perguntas);
+    }
+    
+    public function getByBasicaRelacionamento()
+    {
+        $perguntas = PerguntasEnunciados::where('basica', 'relacionamento')
+                        ->with('opcoes')
+                        ->get();
+        
+        return response()->json($perguntas);
+    }
+    
+    
+
+    
 
     public function createPergunta(Request $request)
     {
@@ -101,4 +132,32 @@ class PerguntasController extends Controller
 
         }
     }
+
+    public function atualizarBasica(Request $request)
+    {
+        // Validação dos dados da solicitação
+        $validator = Validator::make($request->all(), [
+            'enunciado' => 'required|string',
+            'basica' => 'required|in:Relacionamento,Amizade'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 422);
+        }
+    
+        // Busca a pergunta pelo enunciado
+        $pergunta = PerguntasEnunciados::where('enunciado', $request->input('enunciado'))->first();
+    
+        if (!$pergunta) {
+            return response()->json(['error' => 'Pergunta não encontrada'], 404);
+        }
+    
+        // Atualiza a coluna 'basica' com o valor fornecido na solicitação
+        $pergunta->basica = $request->input('basica');
+        $pergunta->save();
+    
+        return response()->json(['message' => 'Pergunta atualizada com sucesso'], 200);
+    }
+           
+    
 }
