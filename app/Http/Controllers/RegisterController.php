@@ -99,7 +99,6 @@ class RegisterController extends Controller
             return response()->json(['error' => $th->getMessage()], 500);
         }
     }
-
     public function registerUserRelAmizade(Request $request)
     {
         try {
@@ -112,9 +111,11 @@ class RegisterController extends Controller
                 ],
                 'data_nascimento' => 'required|date|before_or_equal:today',
                 'you_are_gender' => 'required|in:Homem,Mulher,Outros',
-                'you_look_for_gender' => 'required|in:Homem,Mulher,Outros',
-                'you_look_for_gender_friend' => 'required|in:Homem,Mulher,Outros',
-                'no_man' => 'boolean',
+                'you_look_for_gender' => 'array',
+                'you_look_for_gender.*' => 'in:Homem,Mulher,Outros',
+                'you_look_for_gender_friend' => 'array',
+                'you_look_for_gender_friend.*' => 'in:Homem,Mulher,Outros',
+                'avoid_same_gender_relation' => 'boolean', // Alterado o nome do atributo
                 'password' => 'required|string|min:8',
                 'password_confirmation' => 'required|string|min:8|same:password',
             ]);
@@ -130,12 +131,12 @@ class RegisterController extends Controller
                 'cellphone' => $validatedData["cellphone"],
                 'data_nascimento' => $validatedData["data_nascimento"],
                 'you_are_gender' => $validatedData["you_are_gender"],
-                'you_look_for_gender' => $validatedData["you_look_for_gender"],
-                'you_look_for_gender_friend' => $validatedData["you_look_for_gender_friend"],
-                'no_man' => $validatedData["no_man"],
-                'user_id' => $user->id
+                'you_look_for_gender' => implode(',', $validatedData["you_look_for_gender"]), // Convert array to comma-separated string
+                'you_look_for_gender_friend' => implode(',', $validatedData["you_look_for_gender_friend"]), // Convert array to comma-separated string
+                'avoid_same_gender_relation' => $validatedData["avoid_same_gender_relation"], // Alterado o nome do atributo
+                'id' => $user->id
             ]);
-
+    
             Matches::feedInitialMatches($user->id, 'user_rel_amizade');
         
             $token = $user->createToken('authToken')->plainTextToken;
