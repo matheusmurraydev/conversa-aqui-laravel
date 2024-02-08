@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +23,15 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type',
-        'profile_photo_path'
+        'profile_photo_path',
+        'cellphone',
+        'data_nascimento',
+        'you_are_gender',
+        'estado_civil',
+        'you_look_for_gender',
+        'you_look_for_gender_friend',
+        'avoid_same_gender_relation', 
+        'user_id'
     ];
 
     /**
@@ -31,7 +40,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password'
+        'password',
+        'remember_token'
     ];
 
     /**
@@ -41,20 +51,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'password' => 'hashed',
+        'email_verified_at' => 'datetime',
+        'data_nascimento' => 'datetime', 
     ];
 
-    public function userCupom()
+    public function user()
     {
-        return $this->hasOne(UserCupom::class);
-    }
-
-    public function userRel()
-    {
-        return $this->hasOne(UserRel::class);
-    }
-
-    public function userRelAmizade()
-    {
-        return $this->hasOne(UserRelAmizade::class);
+        return $this->belongsTo(User::class);
     }
 }
