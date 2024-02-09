@@ -67,7 +67,7 @@ class RegisterController extends Controller
                 'password' => bcrypt($validatedData["password"]),
                 'user_type' => $user_type,
                 'cellphone' => $validatedData["cellphone"],
-                'data_nascimento' => $validatedData["data_nascimento"],
+                'data_nascimento' => $validatedData["data_nascimento"]?? null,
                 'you_are_gender' => $validatedData["you_are_gender"],
                 'you_look_for_gender' => $youLookForGender?? null,
                 'you_look_for_gender_friend' => $youLookForGenderFriend?? null,
