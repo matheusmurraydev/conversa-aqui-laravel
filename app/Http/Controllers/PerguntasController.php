@@ -100,38 +100,47 @@ class PerguntasController extends Controller
     
             $validatedData = $request->validate([
                 'pergunta_id' => 'required|integer',
-                'opcoes_selecionadas_ids' => 'array|required_without:resposta_discursiva',
-                'resposta_discursiva' => 'string|required_without:opcoes_selecionadas_ids',
+                'opcoes_selecionadas' => 'array|required_without:resposta_discursiva',
+                'opcoes_selecionadas.*.opcao_id' => 'required|integer',
+                'opcoes_selecionadas.*.sub_opcao_id' => 'integer|nullable',
+                'resposta_discursiva' => 'string|required_without:opcoes_selecionadas',
             ]);
     
-            if ($request->has('opcoes_selecionadas_ids')) {
-
-                $opcoes_selecionadas = $request->input('opcoes_selecionadas_ids');
-                $respostas = [];
-
-                foreach ($opcoes_selecionadas as $opcao_selecionada_id) {
-                    $data = array_merge($validatedData, ['opcao_selecionada_id' => $opcao_selecionada_id, 'user_id' => $user_id]);
-                    $resposta = PerguntasRespostas::create($data);
-                    $respostas[] = $resposta;
+            $opcoes_selecionadas = $validatedData['opcoes_selecionadas'];
+            $respostas = [];
+    
+            foreach ($opcoes_selecionadas as $opcao_selecionada) {
+                $data = [
+                    'pergunta_id' => $validatedData['pergunta_id'],
+                    'user_id' => $user_id,
+                ];
+    
+                if (isset($opcao_selecionada['sub_opcao_id'])) {
+                    $data['opcao_selecionada_id'] = $opcao_selecionada['sub_opcao_id'];
+                } else {
+                    $data['opcao_selecionada_id'] = $opcao_selecionada['opcao_id'];
                 }
-
-                return response()->json($respostas, 201);
-
+    
+                $resposta = PerguntasRespostas::create($data);
+                $respostas[] = $resposta;
             }
+    
             if ($request->has('resposta_discursiva')) {
-
-                $validatedData['resposta_discursiva'] = $request->input('resposta_discursiva');
-                $resposta = PerguntasRespostasDiscursivas::create(array_merge($validatedData, ['user_id' => $user_id]));
-
-                return response()->json($resposta, 201);
+                $resposta_discursiva = PerguntasRespostasDiscursivas::create([
+                    'pergunta_id' => $validatedData['pergunta_id'],
+                    'user_id' => $user_id,
+                    'resposta_do_user' => $validatedData['resposta_discursiva']
+                ]);
+    
+                $respostas[] = $resposta_discursiva;
             }
-
+    
+            return response()->json($respostas, 201);
         } catch (\Throwable $th) {
-
             return response()->json($th->getMessage(), 500);
-
         }
     }
+    
 
     public function atualizarBasica(Request $request)
     {
