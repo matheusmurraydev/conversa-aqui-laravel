@@ -32,7 +32,7 @@ class RegisterController extends Controller
                     'required',
                     'regex:/^\(\d{2}\) \d{9}$/',
                 ],
-                'data_nascimento' => 'required|date|before_or_equal:today',
+                'data_nascimento' => 'nullable|date|before_or_equal:today',
                 'you_are_gender' => 'required|in:Homem,Mulher,Outros',
                 'password' => 'required|string|min:8',
                 'password_confirmation' => 'required|string|min:8|same:password',
