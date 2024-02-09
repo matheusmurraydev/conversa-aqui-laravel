@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\PerguntasRespostas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCupom;
@@ -26,8 +27,12 @@ class LoginController extends Controller
 
         $token = $user->createToken('authToken')->plainTextToken;
 
-        return response(['user' => $user, 'token' => $token], 200);
+        // Busca as perguntas selecionadas pelo usuário
+        $perguntasSelecionadas = PerguntasRespostas::with('pergunta')->where('user_id', $user->id)->get();
+
+        return response(['user' => $user, 'token' => $token, 'perguntas_selecionadas' => $perguntasSelecionadas], 200);
     }
+
 
     // public function loginUserRel(Request $request)
     // {

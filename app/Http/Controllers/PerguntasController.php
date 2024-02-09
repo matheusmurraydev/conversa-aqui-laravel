@@ -167,6 +167,26 @@ class PerguntasController extends Controller
     
         return response()->json(['message' => 'Pergunta atualizada com sucesso'], 200);
     }
-           
     
-}
+    public function opcoesMarcadas()
+    {
+        // Verifica se o usuário está autenticado
+        if (Auth::check()) {
+            // Obtém o ID do usuário autenticado
+            $userId = Auth::id();
+            
+            // Consulta as respostas marcadas pelo usuário autenticado incluindo o enunciado da pergunta e a opção selecionada
+            $respostas = PerguntasRespostas::with(['pergunta', 'opcaoSelecionada'])
+                ->where('user_id', $userId)
+                ->get();
+            
+            // Retorna as respostas marcadas em formato JSON
+            return response()->json($respostas);
+        } else {
+            // Retorna uma resposta de não autorizado caso o usuário não esteja autenticado
+            return response()->json(['error' => 'Não autorizado'], 401);
+        }
+    }
+}         
+    
+
