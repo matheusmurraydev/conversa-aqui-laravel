@@ -64,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/pergunta/resposta', [PerguntasController::class, 'createResposta']);
     Route::put('/perguntas-enunciados/atualizar-basica', [PerguntasController::class, 'atualizarBasica']);
     Route::get('/pergunta/opcoes-marcadas', [PerguntasController::class, 'opcoesMarcadas']);
+    Route::get('/pergunta/orenanlindo', [PerguntasController::class, 'renanLindo']);
 
    
     Route::get('/profile/photo', [ProfilePhotoController::class, 'getProfilePhoto']);
