@@ -8,6 +8,7 @@ use App\Models\PerguntasEnunciados;
 use App\Models\PerguntasOpcoes;
 use App\Models\PerguntasRespostas;
 use App\Models\PerguntasRespostasDiscursivas;
+use App\Models\SubOpcao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -115,7 +116,15 @@ class PerguntasController extends Controller
                     'user_id' => $user_id,
                 ];
     
+                // Se houver uma sub_opcao_id, puxe os detalhes da subopção
                 if (isset($opcao_selecionada['sub_opcao_id'])) {
+                    $subOpcao = SubOpcao::find($opcao_selecionada['sub_opcao_id']);
+                    if ($subOpcao) {
+                        // Adicione detalhes da subopção aos dados
+                        $data['sub_opcao_nome'] = $subOpcao->nome;
+                        $data['sub_opcao_descricao'] = $subOpcao->descricao;
+                        // Continue adicionando outras colunas conforme necessário
+                    }
                     $data['opcao_selecionada_id'] = $opcao_selecionada['sub_opcao_id'];
                 } else {
                     $data['opcao_selecionada_id'] = $opcao_selecionada['opcao_id'];
